@@ -1,24 +1,38 @@
-import { useState } from "react";
-import divineAuthorities from "../data/divineAuthorities";
-import ImageGrid from "../components/imageCard";
-import Pagination from "../components/header";
-
-const IMAGES_PER_PAGE = 12;
+// src/pages/DivineAuthorities.jsx
+import React, { useState } from "react";
+import divineAuthoritiesData from "../data/divineAuthorities";
 
 const DivineAuthorities = () => {
-  const [page, setPage] = useState(0);
-  const totalPages = Math.ceil(divineAuthorities.length / IMAGES_PER_PAGE);
+  const itemsPerPage = 12;
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const currentImages = divineAuthorities.slice(
-    page * IMAGES_PER_PAGE,
-    (page + 1) * IMAGES_PER_PAGE
-  );
+  const totalPages = Math.ceil(divineAuthoritiesData.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentImages = divineAuthoritiesData.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="p-6">
-      <h2 className="text-xl font-semibold mb-4">Divine Authorities</h2>
-      <ImageGrid images={currentImages} />
-      <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
+    <div className="p-4 max-w-6xl mx-auto">
+      <h2 className="text-2xl font-semibold mb-4 text-center">Divine Authorities</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {currentImages.map((url, index) => (
+          <div key={index} className="rounded shadow">
+            <img src={url} alt={`Divine Authority ${index + 1}`} className="w-full h-auto rounded" />
+          </div>
+        ))}
+      </div>
+
+      {/* Pagination */}
+      <div className="flex justify-center mt-6 space-x-2">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index}
+            className={`px-3 py-1 rounded ${currentPage === index + 1 ? "bg-blue-600 text-white" : "bg-gray-200"}`}
+            onClick={() => setCurrentPage(index + 1)}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };

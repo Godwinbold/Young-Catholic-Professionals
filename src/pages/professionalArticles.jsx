@@ -1,40 +1,36 @@
-// src/pages/ProfessionalArticles.js
+// src/pages/ProfessionalArticles.jsx
 import React, { useState } from "react";
-import ImageCard from "../components/imageCard";
+import professionalArticlesData from "../data/professionalArticleData";
 
-const images = [
-  // Replace with actual Cloudinary URLs for the "Professional Articles" section
-  "https://res.cloudinary.com/your-cloud-name/image/upload/v1/professional1.jpg",
-  "https://res.cloudinary.com/your-cloud-name/image/upload/v1/professional2.jpg",
-  // Add more as needed
-];
+const ITEMS_PER_PAGE = 12;
 
 const ProfessionalArticles = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const imagesPerPage = 12;
-  const totalPages = Math.ceil(images.length / imagesPerPage);
 
-  const indexOfLastImage = currentPage * imagesPerPage;
-  const indexOfFirstImage = indexOfLastImage - imagesPerPage;
-  const currentImages = images.slice(indexOfFirstImage, indexOfLastImage);
+  const totalPages = Math.ceil(professionalArticlesData.length / ITEMS_PER_PAGE);
+
+  const startIdx = (currentPage - 1) * ITEMS_PER_PAGE;
+  const currentImages = professionalArticlesData.slice(startIdx, startIdx + ITEMS_PER_PAGE);
 
   return (
-    <div className="min-h-screen p-4 bg-white text-center">
-      <h2 className="text-2xl font-semibold text-blue-700 mb-6">Professional Articles</h2>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {currentImages.map((url, index) => (
-          <ImageCard key={index} imageUrl={url} />
+    <div className="p-4 min-h-screen bg-gray-50">
+      <h2 className="text-xl font-semibold mb-4 text-center">Professional Articles</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {currentImages.map((url, idx) => (
+          <div key={idx} className="bg-white shadow rounded-lg overflow-hidden">
+            <img src={url} alt={`Article ${idx + 1}`} className="w-full h-64 object-cover" />
+          </div>
         ))}
       </div>
 
-      <div className="mt-8 flex justify-center space-x-2">
-        {Array.from({ length: totalPages }).map((_, i) => (
+      {/* Pagination */}
+      <div className="flex justify-center mt-6 space-x-2">
+        {Array.from({ length: totalPages }, (_, i) => (
           <button
             key={i}
             onClick={() => setCurrentPage(i + 1)}
-            className={`px-3 py-1 rounded-full ${
-              currentPage === i + 1 ? "bg-blue-600 text-white" : "bg-gray-200"
+            className={`px-3 py-1 rounded ${
+              currentPage === i + 1 ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-700"
             }`}
           >
             {i + 1}

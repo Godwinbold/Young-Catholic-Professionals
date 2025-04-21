@@ -1,43 +1,35 @@
-// src/pages/Gallery.js
+// src/pages/Gallery.jsx
 import React, { useState } from "react";
-import ImageCard from "../components/imageCard";
-
-const images = [
-  // Replace with actual Cloudinary URLs for the "Gallery" section
-  "https://res.cloudinary.com/your-cloud-name/image/upload/v1/gallery1.jpg",
-  "https://res.cloudinary.com/your-cloud-name/image/upload/v1/gallery2.jpg",
-  // Add more up to 100 if needed
-];
+import galleryData from "../data/gallery";
 
 const Gallery = () => {
+  const itemsPerPage = 12;
   const [currentPage, setCurrentPage] = useState(1);
-  const imagesPerPage = 12;
-  const totalPages = Math.ceil(images.length / imagesPerPage);
 
-  const indexOfLastImage = currentPage * imagesPerPage;
-  const indexOfFirstImage = indexOfLastImage - imagesPerPage;
-  const currentImages = images.slice(indexOfFirstImage, indexOfLastImage);
+  const totalPages = Math.ceil(galleryData.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentImages = galleryData.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="min-h-screen p-4 bg-white text-center">
-      <h2 className="text-2xl font-semibold text-blue-700 mb-6">Gallery</h2>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <div className="p-4 max-w-6xl mx-auto">
+      <h2 className="text-2xl font-semibold mb-4 text-center">Gallery</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {currentImages.map((url, index) => (
-          <ImageCard key={index} imageUrl={url} />
+          <div key={index} className="rounded shadow">
+            <img src={url} alt={`Gallery ${index + 1}`} className="w-full h-auto rounded" />
+          </div>
         ))}
       </div>
 
-      <div className="mt-8 flex justify-center space-x-2">
-        {Array.from({ length: totalPages }).map((_, i) => (
+      {/* Pagination */}
+      <div className="flex justify-center mt-6 space-x-2">
+        {Array.from({ length: totalPages }, (_, index) => (
           <button
-            key={i}
-            onClick={() => setCurrentPage(i + 1)}
-            className={`px-3 py-1 rounded-full ${
-              currentPage === i + 1 ? "bg-blue-600 text-white" : "bg-gray-200"
-            }`}
+            key={index}
+            className={`px-3 py-1 rounded ${currentPage === index + 1 ? "bg-blue-600 text-white" : "bg-gray-200"}`}
+            onClick={() => setCurrentPage(index + 1)}
           >
-            {i + 1}
+            {index + 1}
           </button>
         ))}
       </div>
