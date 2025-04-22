@@ -1,11 +1,22 @@
-// src/pages/LandingPage.js
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/images/ycp.jpg";
-import "../styles/animations.css"; 
+import "../styles/animations.css";
+
+const navItems = [
+  { label: "Divine Authorities", path: "/divine-authorities" },
+  { label: "Program", path: "/program" },
+  { label: "Liturgy", path: "/liturgy" },
+  { label: "Memories", path: "/memories" },
+  { label: "Professional Articles", path: "/professional-articles" },
+  { label: "Gallery", path: "/gallery" },
+  { label: "Awards", path: "/awards" },
+];
+
 const LandingPage = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
 
   return (
     <div className="flex flex-col min-h-screen bg-white text-gray-800">
@@ -19,40 +30,48 @@ const LandingPage = () => {
           </div>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex space-x-6 text-sm font-medium">
-            <Link to="/divine-authorities" className="hover:text-blue-600">Divine Authorities</Link>
-            <Link to="/program" className="hover:text-blue-600">Program</Link>
-            <Link to="/liturgy" className="hover:text-blue-600">Liturgy</Link>
-            <Link to="/memories" className="hover:text-blue-600">Memories</Link>
-            <Link to="/professional-articles" className="hover:text-blue-600">Professional Articles</Link>
-            <Link to="/gallery" className="hover:text-blue-600">Gallery</Link>
-            <Link to="/awards" className="hover:text-blue-600">Awards</Link>
+          <nav className="hidden md:flex space-x-4 text-sm font-medium">
+            {navItems.map(({ label, path }) => (
+              <Link
+                key={path}
+                to={path}
+                className={`px-3 py-2 rounded transition duration-200 ${
+                  location.pathname === path
+                    ? "bg-blue-600 text-white"
+                    : "text-gray-700 hover:text-blue-600 hover:bg-gray-100"
+                }`}
+              >
+                {label}
+              </Link>
+            ))}
           </nav>
 
-          {/* Hamburger Icon + Label */}
+          {/* Hamburger Icon */}
           <button
             className="md:hidden flex items-center text-gray-700 focus:outline-none"
             onClick={() => setMenuOpen(!menuOpen)}
           >
-            {menuOpen ? (
-              <X size={28} className="pulse" />
-            ) : (
-              <Menu size={28} className="pulse" />
-            )}
+            {menuOpen ? <X size={28} className="pulse" /> : <Menu size={28} className="pulse" />}
             <span className="ml-2 text-sm">Menu</span>
           </button>
         </div>
 
         {/* Mobile Nav */}
         {menuOpen && (
-          <div className="md:hidden mt-3 space-y-2 text-center text-sm font-medium">
-            <Link to="/divine-authorities" className="block hover:text-blue-600">Divine Authorities</Link>
-            <Link to="/program" className="block hover:text-blue-600">Program</Link>
-            <Link to="/liturgy" className="block hover:text-blue-600">Liturgy</Link>
-            <Link to="/memories" className="block hover:text-blue-600">Memories</Link>
-            <Link to="/professional-articles" className="block hover:text-blue-600">Professional Articles</Link>
-            <Link to="/gallery" className="block hover:text-blue-600">Gallery</Link>
-            <Link to="/awards" className="block hover:text-blue-600">Awards</Link>
+          <div className="md:hidden mt-4 px-2 space-y-2 text-sm font-medium">
+            {navItems.map(({ label, path }) => (
+              <Link
+                key={path}
+                to={path}
+                className={`block w-full px-4 py-2 rounded transition duration-150 text-center ${
+                  location.pathname === path
+                    ? "bg-blue-600 text-white"
+                    : "text-gray-700 hover:bg-blue-100 hover:text-blue-700"
+                }`}
+              >
+                {label}
+              </Link>
+            ))}
           </div>
         )}
       </header>
