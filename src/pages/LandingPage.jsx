@@ -1,8 +1,9 @@
 // src/pages/LandingPage.js
 import React, { useState } from "react";
-import { Menu, X } from "lucide-react"; // Icon from lucide-react
-import { Link } from "react-router-dom"; // Import Link for navigation
+import { Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
 import logo from "../assets/images/ycp.jpg";
+import "../styles/animations.css"; // for optional pulse effect
 
 const LandingPage = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -29,12 +30,17 @@ const LandingPage = () => {
             <Link to="/awards" className="hover:text-blue-600">Awards</Link>
           </nav>
 
-          {/* Hamburger Icon */}
+          {/* Hamburger Icon + Label */}
           <button
-            className="md:hidden text-gray-700 focus:outline-none"
+            className="md:hidden flex items-center text-gray-700 focus:outline-none"
             onClick={() => setMenuOpen(!menuOpen)}
           >
-            {menuOpen ? <X size={28} /> : <Menu size={28} />}
+            {menuOpen ? (
+              <X size={28} className="pulse" />
+            ) : (
+              <Menu size={28} className="pulse" />
+            )}
+            <span className="ml-2 text-sm">Menu</span>
           </button>
         </div>
 
