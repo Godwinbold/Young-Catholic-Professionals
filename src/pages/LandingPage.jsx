@@ -16,7 +16,7 @@ const LandingPage = () => {
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <img src={logo} alt="Logo" className="w-10 h-10 rounded-full" />
-            <h1 className="text-lg font-semibold">YCP DAY</h1>
+            <h1 className="text-lg font-semibold">YCP DAY 2025 Brochure</h1>
           </div>
 
           {/* Desktop Nav */}
