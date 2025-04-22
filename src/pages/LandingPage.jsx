@@ -3,8 +3,7 @@ import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import logo from "../assets/images/ycp.jpg";
-import "../styles/animations.css"; // for optional pulse effect
-
+import "../styles/animations.css"; 
 const LandingPage = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -16,7 +15,7 @@ const LandingPage = () => {
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <img src={logo} alt="Logo" className="w-10 h-10 rounded-full" />
-            <h1 className="text-lg font-semibold">YCP DAY 2025 Brochure</h1>
+            <h1 className="text-lg font-semibold">YCP DAY 2025</h1>
           </div>
 
           {/* Desktop Nav */}

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ Add this import
+import { useNavigate } from "react-router-dom"; 
 import professionalArticlesData from "../data/professionalArticleData";
 
 const ITEMS_PER_PAGE = 12;
 
 const ProfessionalArticles = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const navigate = useNavigate(); // ✅ useNavigate hook
+  const navigate = useNavigate(); 
 
   const totalPages = Math.ceil(professionalArticlesData.length / ITEMS_PER_PAGE);
   const startIdx = (currentPage - 1) * ITEMS_PER_PAGE;
