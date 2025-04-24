@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; 
-import awardsData from "../data/awards"; // ✅ Your awards image URLs go in this file
+import awardsData from "../data/awards"; 
+import Footer from "../components/footer";
 
 const Awards = () => {
   const itemsPerPage = 12;
@@ -12,6 +13,7 @@ const Awards = () => {
   const currentImages = awardsData.slice(startIndex, startIndex + itemsPerPage);
 
   return (
+    <>
     <div className="p-4 max-w-6xl mx-auto relative">
       {/* Top Back Button */}
       <button
@@ -60,6 +62,8 @@ const Awards = () => {
         </button>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 

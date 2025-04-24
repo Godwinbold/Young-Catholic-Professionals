@@ -1,26 +1,28 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import programImages from "../data/programData";
+import { Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+import programImages from "../data/programData"; // ✅ this is the import
 
 const Program = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const imagesPerPage = 12;
-  const navigate = useNavigate();
 
+  // Pagination logic
   const indexOfLastImage = currentPage * imagesPerPage;
   const indexOfFirstImage = indexOfLastImage - imagesPerPage;
   const currentImages = programImages.slice(indexOfFirstImage, indexOfLastImage);
   const totalPages = Math.ceil(programImages.length / imagesPerPage);
 
   return (
-    <div className="p-6 min-h-screen relative">
-      {/* Top Back Button */}
-      <button
-        onClick={() => navigate(-1)}
-        className="absolute top-4 right-4 bg-gray-200 hover:bg-gray-300 text-sm px-3 py-1 rounded"
+    <div className="p-6 relative min-h-screen">
+      {/* Top Back Icon */}
+      <Link
+        to="/"
+        className="absolute top-4 right-4 text-gray-600 hover:text-blue-600"
+        title="Go back"
       >
-        Back
-      </button>
+        <ArrowLeft size={24} />
+      </Link>
 
       <h2 className="text-xl font-semibold mb-4">Program</h2>
 
@@ -32,7 +34,7 @@ const Program = () => {
         ))}
       </div>
 
-      {/* Pagination */}
+      {/* Pagination Controls */}
       <div className="mt-6 flex justify-center space-x-2">
         {Array.from({ length: totalPages }, (_, i) => (
           <button
@@ -47,14 +49,15 @@ const Program = () => {
         ))}
       </div>
 
-      {/* Bottom Back Button */}
+      {/* Bottom Back Icon */}
       <div className="mt-10 flex justify-end">
-        <button
-          onClick={() => navigate(-1)}
-          className="bg-gray-200 hover:bg-gray-300 text-sm px-3 py-1 rounded"
+        <Link
+          to="/"
+          className="text-gray-600 hover:text-blue-600"
+          title="Back to Home"
         >
-          Back
-        </button>
+          <ArrowLeft size={24} />
+        </Link>
       </div>
     </div>
   );

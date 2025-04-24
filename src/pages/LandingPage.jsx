@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/images/ycp.jpg";
 import "../styles/animations.css";
 
@@ -15,8 +15,17 @@ const navItems = [
 ];
 
 const LandingPage = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(() => {
+    // Initialize from history state (default false)
+    return window.history.state?.usr?.menuOpen || false;
+  });
+
+  // Sync menu state to browser history
+  useEffect(() => {
+    window.history.replaceState({ ...window.history.state, usr: { menuOpen } }, "");
+  }, [menuOpen]);
 
   return (
     <div className="flex flex-col min-h-screen bg-white text-gray-800">
@@ -63,6 +72,7 @@ const LandingPage = () => {
               <Link
                 key={path}
                 to={path}
+                // Don't close the menu so we can preserve state on back
                 className={`block w-full px-4 py-2 rounded transition duration-150 text-center ${
                   location.pathname === path
                     ? "bg-blue-600 text-white"
